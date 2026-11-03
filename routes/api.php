@@ -9,5 +9,5 @@ use App\Http\Controllers\Api\ObatController;
 
 Route::post('/register', [PendaftaranController::class, 'store']);
 Route::post('/pelanggan', [PelangganController::class, 'store']);
-Route::post('/staf', [StafApotekController::class, 'store']);
+Route::post('/staf-apotek', [StafApotekController::class, 'store']);
 Route::post('/obat', [ObatController::class, 'store']);
