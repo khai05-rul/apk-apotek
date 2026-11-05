@@ -8,17 +8,22 @@ use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
-    public function store(Request $request) {
-        $validated = $request->validate([
-            'id_pelanggan' => 'required|unique:pelanggans',
-            'nama' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'no_hp' => 'required|string|max:15',
-        ]);
-
-        $pelanggan = Pelanggan::create($validated);
+    // Fungsi GET untuk menampilkan semua data pelanggan
+    public function index()
+    {
+        $pelanggan = Pelanggan::all();
         return response()->json([
-            'success' => true,
+            'status' => 'success',
+            'data' => $pelanggan
+        ], 200);
+    }
+
+    // Fungsi POST untuk menyimpan data pelanggan baru
+    public function store(Request $request)
+    {
+        $pelanggan = Pelanggan::create($request->all());
+        return response()->json([
+            'status' => 'success',
             'message' => 'Data pelanggan berhasil disimpan',
             'data' => $pelanggan
         ], 201);

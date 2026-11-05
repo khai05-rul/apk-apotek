@@ -3,24 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\StafApotek;
+use App\Models\StafApotek; // atau Staf tergantung nama model Anda
 use Illuminate\Http\Request;
 
 class StafApotekController extends Controller
 {
-    public function store(Request $request) {
-        $validated = $request->validate([
-            'id_staff' => 'required|unique:staf_apoteks',
-            'nama' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'tanggal_lahir' => 'required|date',
-            'tempat_lahir' => 'required|string|max:255',
-            'no_hp' => 'required|string|max:15',
-        ]);
-
-        $staf = StafApotek::create($validated);
+    // Fungsi GET untuk menampilkan semua data staf apotek
+    public function index()
+    {
+        $staf = StafApotek::all();
         return response()->json([
-            'success' => true,
+            'status' => 'success',
+            'data' => $staf
+        ], 200);
+    }
+
+    // Fungsi POST untuk menyimpan data staf apotek baru
+    public function store(Request $request)
+    {
+        $staf = StafApotek::create($request->all());
+        return response()->json([
+            'status' => 'success',
             'message' => 'Data staf apotek berhasil disimpan',
             'data' => $staf
         ], 201);

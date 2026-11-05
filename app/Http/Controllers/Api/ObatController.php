@@ -8,17 +8,22 @@ use Illuminate\Http\Request;
 
 class ObatController extends Controller
 {
-    public function store(Request $request) {
-        $validated = $request->validate([
-            'kode_obat' => 'required|unique:obats',
-            'nama_obat' => 'required|string|max:255',
-            'stock_obat' => 'required|integer',
-            'tanggal_kadaluarsa' => 'required|date',
-        ]);
-
-        $obat = Obat::create($validated);
+    // Fungsi GET untuk menampilkan semua data obat
+    public function index()
+    {
+        $obat = Obat::all();
         return response()->json([
-            'success' => true,
+            'status' => 'success',
+            'data' => $obat
+        ], 200);
+    }
+
+    // Fungsi POST untuk menyimpan data obat baru
+    public function store(Request $request)
+    {
+        $obat = Obat::create($request->all());
+        return response()->json([
+            'status' => 'success',
             'message' => 'Data obat berhasil disimpan',
             'data' => $obat
         ], 201);
